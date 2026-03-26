@@ -1,0 +1,1231 @@
+/* 功德健康游戏 - 样式表 */
+
+:root {
+    --primary-color: #4a6fa5;
+    --primary-dark: #385d8a;
+    --primary-light: #6b8cbc;
+    --secondary-color: #ff922b;
+    --accent-color: #51cf66;
+    --danger-color: #ff6b6b;
+    --warning-color: #ffd43b;
+    --success-color: #40c057;
+    
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --text-light: #666666;
+    --border-color: #e9ecef;
+    
+    --font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    --border-radius: 12px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --box-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+    
+    --header-height: 70px;
+    --footer-height: 60px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 头部样式 */
+.header {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    padding: 0 2rem;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo i {
+    font-size: 2rem;
+    color: var(--warning-color);
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.logo .subtitle {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-left: 8px;
+    font-weight: 300;
+}
+
+.nav {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: white;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: var(--warning-color);
+    border-radius: 3px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(10px);
+}
+
+.avatar i {
+    font-size: 2rem;
+    color: white;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.user-level {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+/* 主要内容区域 */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.section {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.section-header h2 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 按钮样式 */
+.btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-hover);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #e67e22;
+    transform: translateY(-2px);
+}
+
+.btn-accent {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.btn-block {
+    width: 100%;
+    justify-content: center;
+}
+
+/* 卡片样式 */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-hover);
+}
+
+.card-header {
+    padding: 1.2rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    color: white;
+}
+
+.card-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-primary .card-header {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+}
+
+.card-secondary .card-header {
+    background: linear-gradient(135deg, #ffa94d, var(--secondary-color));
+}
+
+.card-accent .card-header {
+    background: linear-gradient(135deg, #69db7c, var(--accent-color));
+}
+
+.card-wide {
+    grid-column: span 2;
+}
+
+/* 总功德样式 */
+.total-merit {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.today-merit {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.streak-days {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.merit-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.level-info {
+    margin-top: 1rem;
+}
+
+.level-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: var(--border-color);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-color), var(--success-color));
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 今日统计 */
+.today-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.stat-item i {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.stat-item span {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* 连续天数 */
+.fire-icons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.fire-icons i {
+    font-size: 1.5rem;
+}
+
+.streak-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+/* 图表容器 */
+.chart-container {
+    height: 200px;
+    position: relative;
+}
+
+.chart-container-large {
+    height: 400px;
+    margin-top: 2rem;
+}
+
+/* 表单样式 */
+.submit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-family: var(--font-family);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form-hint {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 0.3rem;
+}
+
+/* 功德计算器 */
+.calculator-result {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: var(--border-radius);
+}
+
+.calculated-merit {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.calculated-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.merit-breakdown {
+    background: var(--bg-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+}
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.breakdown-item:last-child {
+    border-bottom: none;
+}
+
+.breakdown-label {
+    font-weight: 500;
+}
+
+.breakdown-value {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.calculator-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: rgba(74, 111, 165, 0.1);
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+/* 排行榜 */
+.leaderboard-container {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.leaderboard-table thead {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    color: white;
+}
+
+.leaderboard-table th {
+    padding: 1.2rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.leaderboard-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
+.leaderboard-table tbody tr:hover {
+    background-color: rgba(74, 111, 165, 0.05);
+}
+
+.leaderboard-table td {
+    padding: 1rem;
+    font-size: 0.95rem;
+}
+
+.leaderboard-table tr:nth-child(1) td:first-child {
+    color: var(--warning-color);
+    font-weight: 700;
+}
+
+.leaderboard-table tr:nth-child(2) td:first-child {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.leaderboard-table tr:nth-child(3) td:first-child {
+    color: #cd7f32;
+    font-weight: 600;
+}
+
+.user-rank-card {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    color: white;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
+}
+
+.user-rank-card h3 {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rank-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.rank-number {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.rank-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.rank-percentile {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.rank-total {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* 成就殿堂 */
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.achievement-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.achievement-card:hover {
+    transform: translateY(-5px);
+}
+
+.achievement-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.achievement-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.achievement-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.achievement-description {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.5;
+}
+
+.achievement-progress {
+    margin-top: 0.5rem;
+}
+
+.progress-text-small {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 0.3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 模态框样式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-hover);
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--text-light);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.modal-close:hover {
+    background-color: var(--bg-color);
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+/* 模拟选项 */
+.simulate-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.simulate-option {
+    background: var(--bg-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.simulate-option:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: var(--box-shadow);
+}
+
+.simulate-option i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.simulate-option h4 {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.simulate-option p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.simulate-merit {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    padding: 0.5rem;
+    background: white;
+    border-radius: 6px;
+}
+
+.simulate-custom {
+    text-align: center;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: var(--border-radius);
+}
+
+.simulate-custom h4 {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* 选择框样式 */
+.select {
+    padding: 0.6rem 1.2rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* 底部样式 */
+.footer {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    color: white;
+    padding: 1.5rem 2rem;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-copyright {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        height: auto;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .main-content {
+        padding: 1rem;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-wide {
+        grid-column: span 1;
+    }
+    
+    .submit-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* 加载动画 */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 成就摘要样式 */
+.achievement-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--card-bg);
+    padding: 12px 16px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    min-width: 280px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.summary-item i {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+#total-boost {
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.next-boost {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    background: rgba(81, 207, 102, 0.1);
+    padding: 6px 10px;
+    border-radius: 6px;
+    border-left: 3px solid var(--accent-color);
+}
+
+.next-boost i {
+    color: var(--accent-color);
+}
+
+#next-boost-name {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+#next-boost-percent {
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+/* 成就稀有度颜色 */
+.rarity-common {
+    color: #868e96;
+}
+
+.rarity-rare {
+    color: #339af0;
+}
+
+.rarity-epic {
+    color: #9c36b5;
+}
+
+.rarity-legendary {
+    color: #f59f00;
+}
+
+/* 成就类型徽章 */
+.achievement-type-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-left: 8px;
+    text-transform: uppercase;
+}
+
+.type-milestone {
+    background: rgba(74, 111, 165, 0.1);
+    color: var(--primary-color);
+}
+
+.type-challenge {
+    background: rgba(255, 146, 43, 0.1);
+    color: var(--secondary-color);
+}
+
+.type-hidden {
+    background: rgba(102, 102, 102, 0.1);
+    color: var(--text-light);
+}
+
+.type-social {
+    background: rgba(81, 207, 102, 0.1);
+    color: var(--accent-color);
+}
+
+.type-seasonal {
+    background: rgba(255, 107, 107, 0.1);
+    color: var(--danger-color);
+}
+
+.type-combo {
+    background: rgba(132, 94, 247, 0.1);
+    color: #845ef7;
+}
+
+/* 成就加成指示器 */
+.achievement-boost {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 8px;
+    padding: 2px 6px;
+    background: rgba(255, 214, 59, 0.1);
+    border-radius: 10px;
+    font-size: 0.75rem;
+    color: #ff922b;
+}
+
+.achievement-boost i {
+    font-size: 0.7rem;
+}
+
+/* 动态成就样式 */
+.dynamic-achievements-header {
+    grid-column: 1 / -1;
+    margin: 2rem 0 1rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, rgba(81, 207, 102, 0.1), rgba(64, 192, 87, 0.05));
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--accent-color);
+}
+
+.dynamic-achievements-header h3 {
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dynamic-achievements-header p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.dynamic-achievement {
+    border: 2px dashed rgba(81, 207, 102, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.dynamic-achievement::before {
+    content: 'NEW';
+    position: absolute;
+    top: 10px;
+    right: -25px;
+    background: var(--accent-color);
+    color: white;
+    padding: 2px 30px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    transform: rotate(45deg);
+    transform-origin: center;
+}
+
+/* 成就元数据 */
+.achievement-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.85rem;
+}
+
+.achievement-rarity {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+}
+
+.achievement-reward {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--secondary-color);
+    font-weight: 500;
+}
+
+.achievement-reward i {
+    color: var(--warning-color);
+}
+
+/* 成就标题样式 */
+.achievement-title {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* 成就图标增强 */
+.achievement-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 成就卡片增强 */
+.achievement-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.achievement-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-hover);
+    border-color: rgba(74, 111, 165, 0.2);
+}
+
+.achievement-card.dynamic-achievement:hover {
+    border-color: rgba(81, 207, 102, 0.3);
+}
+
+/* 计算器加成提示 */
+.calculator-boost {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 10px;
+    background: linear-gradient(135deg, rgba(255, 214, 59, 0.1), rgba(255, 146, 43, 0.05));
+    border-radius: 8px;
+    border-left: 3px solid var(--warning-color);
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.calculator-boost i {
+    color: var(--warning-color);
+    font-size: 0.9rem;
+}
+
+.boost-detail {
+    margin-left: auto;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+#boosted-merit {
+    color: var(--secondary-color);
+    font-weight: 700;
+}
+
+#boost-percentage {
+    font-weight: 600;
+    color: var(--warning-color);
+}

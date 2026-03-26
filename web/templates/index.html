@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功德健康游戏 - 修行之旅</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-medal"></i>
+                <h1>功德健康游戏</h1>
+                <span class="subtitle">修行之旅 · 健康成道</span>
+            </div>
+            <nav class="nav">
+                <a href="#dashboard" class="nav-link active"><i class="fas fa-home"></i> 功德簿</a>
+                <a href="#merit" class="nav-link"><i class="fas fa-trophy"></i> 修行记录</a>
+                <a href="#leaderboard" class="nav-link"><i class="fas fa-crown"></i> 华山论剑</a>
+                <a href="#submit" class="nav-link"><i class="fas fa-running"></i> 提交功德</a>
+                <a href="#achievements" class="nav-link"><i class="fas fa-award"></i> 成就殿堂</a>
+            </nav>
+            <div class="user-info">
+                <div class="avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-details">
+                    <div class="username" id="username">修行者</div>
+                    <div class="user-level" id="user-level">凡夫俗子</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <!-- 功德总览 -->
+            <section id="dashboard" class="section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-scroll"></i> 功德总览</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" onclick="refreshData()">
+                            <i class="fas fa-sync-alt"></i> 刷新
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <!-- 总功德卡片 -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3><i class="fas fa-star"></i> 总功德</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="total-merit" id="total-merit">0</div>
+                            <div class="merit-label">累计功德</div>
+                            <div class="level-info">
+                                <div class="level-name" id="total-level-name">凡夫俗子</div>
+                                <div class="level-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="total-progress" style="width: 0%"></div>
+                                    </div>
+                                    <div class="progress-text">
+                                        <span id="next-level-merit">0</span> 功德升级
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 今日功德 -->
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3><i class="fas fa-sun"></i> 今日功德</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="today-merit" id="today-merit">0</div>
+                            <div class="merit-label">今日获得</div>
+                            <div class="today-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-walking"></i>
+                                    <span id="today-steps">0</span> 步
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-running"></i>
+                                    <span id="today-running">0</span> km
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-bed"></i>
+                                    <span id="today-sleep">0</span> 小时
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 连续天数 -->
+                    <div class="card card-accent">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calendar-alt"></i> 修行坚持</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="streak-days" id="streak-days">0</div>
+                            <div class="merit-label">连续天数</div>
+                            <div class="streak-info">
+                                <div class="fire-icons">
+                                    <i class="fas fa-fire" style="color: #ff6b6b;"></i>
+                                    <i class="fas fa-fire" style="color: #ff922b;"></i>
+                                    <i class="fas fa-fire" style="color: #ffd43b;"></i>
+                                </div>
+                                <div class="streak-text">
+                                    保持修行，功德无量！
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 功德分布图 -->
+                    <div class="card card-wide">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-pie"></i> 功德分布</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="merit-distribution-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 修行记录 -->
+            <section id="merit" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-history"></i> 修行记录</h2>
+                    <div class="section-actions">
+                        <select id="time-range" class="select" onchange="loadMeritHistory()">
+                            <option value="7">最近7天</option>
+                            <option value="30">最近30天</option>
+                            <option value="90">最近90天</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="merit-categories">
+                    <!-- 各项功德类别将动态加载 -->
+                </div>
+                
+                <div class="chart-container-large">
+                    <canvas id="merit-history-chart"></canvas>
+                </div>
+            </section>
+
+            <!-- 排行榜 -->
+            <section id="leaderboard" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-crown"></i> 华山论剑</h2>
+                    <div class="section-actions">
+                        <select id="leaderboard-type" class="select" onchange="loadLeaderboard()">
+                            <option value="total">总功德榜</option>
+                            <option value="daily">今日功德榜</option>
+                            <option value="weekly">本周功德榜</option>
+                            <option value="monthly">本月功德榜</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="leaderboard-container">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>排名</th>
+                                <th>修行者</th>
+                                <th>功德</th>
+                                <th>等级</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body">
+                            <!-- 排行榜数据将动态加载 -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="user-rank-card">
+                    <h3><i class="fas fa-user"></i> 我的排名</h3>
+                    <div class="rank-info" id="user-rank-info">
+                        <div class="rank-number">--</div>
+                        <div class="rank-details">
+                            <div class="rank-percentile">前 --%</div>
+                            <div class="rank-total">总人数: --</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 提交功德 -->
+            <section id="submit" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-running"></i> 提交功德</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-secondary" onclick="showSimulateData()">
+                            <i class="fas fa-magic"></i> 模拟数据
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="submit-grid">
+                    <!-- 健康数据表单 -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-edit"></i> 提交健康数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="health-data-form">
+                                <div class="form-group">
+                                    <label for="running"><i class="fas fa-running"></i> 跑步距离 (公里)</label>
+                                    <input type="number" id="running" step="0.1" min="0" placeholder="例如：5.2">
+                                    <div class="form-hint">每公里 1000 功德</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="walking"><i class="fas fa-walking"></i> 步行步数</label>
+                                    <input type="number" id="walking" min="0" placeholder="例如：8500">
+                                    <div class="form-hint">每100步 10 功德</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="sleep"><i class="fas fa-bed"></i> 睡眠时长 (小时)</label>
+                                    <input type="number" id="sleep" step="0.1" min="0" placeholder="例如：7.5">
+                                    <div class="form-hint">每小时 500 功德</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="exercise"><i class="fas fa-dumbbell"></i> 锻炼时间 (分钟)</label>
+                                    <input type="number" id="exercise" min="0" placeholder="例如：45">
+                                    <div class="form-hint">每分钟 50 功德</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="standing"><i class="fas fa-user-standing"></i> 站立时间 (小时)</label>
+                                    <input type="number" id="standing" step="0.1" min="0" placeholder="例如：10">
+                                    <div class="form-hint">每小时 300 功德</div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paper-plane"></i> 提交功德
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- 功德计算器 -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calculator"></i> 功德计算器</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="calculator-result">
+                                <div class="calculated-merit" id="calculated-merit">0</div>
+                                <div class="calculated-label">预计获得功德</div>
+                            </div>
+                            
+                            <div class="merit-breakdown">
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">跑步功德</span>
+                                    <span class="breakdown-value" id="breakdown-running">0</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">步行功德</span>
+                                    <span class="breakdown-value" id="breakdown-walking">0</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">睡眠功德</span>
+                                    <span class="breakdown-value" id="breakdown-sleep">0</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">锻炼功德</span>
+                                    <span class="breakdown-value" id="breakdown-exercise">0</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">站立功德</span>
+                                    <span class="breakdown-value" id="breakdown-standing">0</span>
+                                </div>
+                            </div>
+                            
+                            <div class="calculator-note">
+                                <i class="fas fa-info-circle"></i>
+                                输入数据后自动计算预计功德
+                            </div>
+                            
+                            <div class="calculator-boost" id="calculator-boost" style="display: none;">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>成就加成: <span id="boost-percentage">0</span>%</span>
+                                <span class="boost-detail">加成后功德: <span id="boosted-merit">0</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 成就殿堂 -->
+            <section id="achievements" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-award"></i> 成就殿堂</h2>
+                    <div class="section-actions">
+                        <div class="achievement-summary">
+                            <div class="summary-row">
+                                <span class="summary-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span id="achieved-count">0</span>/<span id="total-achievements">0</span> 达成
+                                </span>
+                                <span class="summary-item">
+                                    <i class="fas fa-chart-line"></i>
+                                    总加成: <span id="total-boost">0</span>%
+                                </span>
+                                <span class="summary-item">
+                                    <i class="fas fa-fire"></i>
+                                    连续: <span id="streak-days-summary">0</span>天
+                                </span>
+                            </div>
+                            <div class="summary-row" id="next-boost-target" style="display: none;">
+                                <span class="next-boost">
+                                    <i class="fas fa-bullseye"></i>
+                                    下一个加成: <span id="next-boost-name"></span> (+<span id="next-boost-percent"></span>%)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="achievements-grid" id="achievements-grid">
+                    <!-- 成就卡片将动态加载 -->
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-medal"></i>
+                    <span>功德健康游戏</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#"><i class="fas fa-book"></i> 使用指南</a>
+                    <a href="#"><i class="fas fa-question-circle"></i> 常见问题</a>
+                    <a href="#"><i class="fas fa-share-alt"></i> 分享功德</a>
+                </div>
+                <div class="footer-copyright">
+                    &copy; 2026 功德健康游戏 · 修行之旅
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 模拟数据模态框 -->
+    <div id="simulate-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-magic"></i> 模拟健康数据</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="simulate-options">
+                    <div class="simulate-option" onclick="simulateDay('light')">
+                        <i class="fas fa-seedling"></i>
+                        <h4>轻度修行</h4>
+                        <p>日常活动，少量运动</p>
+                        <div class="simulate-merit">~2,000 功德</div>
+                    </div>
+                    <div class="simulate-option" onclick="simulateDay('moderate')">
+                        <i class="fas fa-hiking"></i>
+                        <h4>中度修行</h4>
+                        <p>规律运动，良好作息</p>
+                        <div class="simulate-merit">~5,000 功德</div>
+                    </div>
+                    <div class="simulate-option" onclick="simulateDay('intensive')">
+                        <i class="fas fa-fire"></i>
+                        <h4>精进修习</h4>
+                        <p>高强度训练，完美作息</p>
+                        <div class="simulate-merit">~10,000+ 功德</div>
+                    </div>
+                </div>
+                <div class="simulate-custom">
+                    <h4><i class="fas fa-sliders-h"></i> 自定义模拟</h4>
+                    <button class="btn btn-secondary" onclick="simulateRandom()">
+                        <i class="fas fa-random"></i> 随机生成
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
